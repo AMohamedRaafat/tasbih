@@ -186,6 +186,26 @@
             position: relative;
             z-index: 1;
             margin-top: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .doaa-text:hover {
+            color: #f5e6a3;
+        }
+        
+        .doaa-text::after {
+            content: '🔊';
+            position: absolute;
+            font-size: 1rem;
+            opacity: 0;
+            margin-right: 10px;
+            transform: translateY(-5px);
+            transition: opacity 0.3s ease;
+        }
+
+        .doaa-text:hover::after {
+            opacity: 0.8;
         }
 
         /* Ornament dividers */
@@ -448,7 +468,7 @@
         </div>
 
         <div class="doaa-card">
-            <p class="doaa-text">
+            <p class="doaa-text" id="doaaText" title="استمع للدعاء">
                 لا إلٰهَ إلّا اللهُ وَحدَهُ لا شَريكَ لَهُ، لَهُ المُلكُ وَلَهُ الحَمدُ وَهُوَ عَلىٰ كُلِّ شَيءٍ قَديرٌ
             </p>
             <div class="ornament">
@@ -545,6 +565,28 @@
                 localStorage.setItem(STORAGE_KEY, count);
             }
         });
+
+        // Text to Speech for the dua
+        const doaaTextEl = document.getElementById('doaaText');
+        
+        function speakDoaa() {
+            // Check if it's already speaking
+            if (window.speechSynthesis.speaking) return;
+            
+            const textToRead = doaaTextEl.textContent.trim();
+            const utterance = new SpeechSynthesisUtterance(textToRead);
+            utterance.lang = 'ar-SA'; // Arabic (Saudi Arabia)
+            utterance.rate = 0.8; // Slightly slower for better recitation feel
+            
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Play on hover and click
+        doaaTextEl.addEventListener('mouseenter', speakDoaa);
+        doaaTextEl.addEventListener('click', speakDoaa);
+        
+        // Stop reading if mouse leaves (optional, maybe better to let it finish, so commented out)
+        // doaaTextEl.addEventListener('mouseleave', () => window.speechSynthesis.cancel());
 
         // Keyboard support (spacebar)
         document.addEventListener('keydown', (e) => {
