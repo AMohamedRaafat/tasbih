@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1a1a3e"/>
+      <stop offset="100%" stop-color="#0f0c29"/>
+    </radialGradient>
+  </defs>
+  <rect width="192" height="192" fill="url(#bg)" rx="40"/>
+  <circle cx="96" cy="96" r="72" fill="none" stroke="#d4af37" stroke-width="2.5" opacity="0.6"/>
+  <circle cx="96" cy="96" r="58" fill="none" stroke="#d4af37" stroke-width="1.2" opacity="0.25"/>
+  <!-- 8-pointed star -->
+  <polygon points="96,62 103,82 124,82 107,94 113,114 96,102 79,114 85,94 68,82 89,82" fill="#d4af37" opacity="0.9"/>
+  <polygon points="96,62 103,82 124,82 107,94 113,114 96,102 79,114 85,94 68,82 89,82" fill="#d4af37" opacity="0.9" transform="rotate(36, 96, 92)"/>
+  <circle cx="96" cy="92" r="5" fill="#0f0c29"/>
+  <text x="96" y="140" text-anchor="middle" font-family="serif" font-size="16" fill="#d4af37" opacity="0.7">تسبيح</text>
+</svg>

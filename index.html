@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسبيح - عداد الأذكار</title>
+    <meta name="description" content="عداد أذكار إلكتروني - لا إله إلا الله وحده لا شريك له وهو على كل شيء قدير">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f0c29">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 30%, #24243e 60%, #0f0c29 100%);
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background stars */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.2), transparent),
+                radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.3), transparent);
+            background-size: 200px 100px;
+            animation: twinkle 4s ease-in-out infinite alternate;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Decorative geometric pattern */
+        .geometric-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.03) 0%, transparent 70%);
+            border: 1px solid rgba(212, 175, 55, 0.05);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .geometric-bg::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0.08);
+        }
+
+        .geometric-bg::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d4af37;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            margin-bottom: 0.3rem;
+        }
+
+        .header .subtitle {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Doaa Card */
+        .doaa-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .doaa-card::before {
+            content: '﷽';
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Amiri', serif;
+            font-size: 1.3rem;
+            color: rgba(212, 175, 55, 0.5);
+        }
+
+        .doaa-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.03), transparent);
+            animation: shimmer 6s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translateX(-30%); }
+            50% { transform: translateX(30%); }
+        }
+
+        .doaa-text {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            line-height: 2.2;
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+            margin-top: 1.5rem;
+        }
+
+        /* Ornament dividers */
+        .ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            color: rgba(212, 175, 55, 0.4);
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ornament .line {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+        }
+
+        /* Arafah Badge */
+        .arafah-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.2rem;
+            padding: 0.6rem 1.4rem;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.03));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 50px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        .arafah-badge .badge-icon {
+            font-size: 1.1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+
+        .arafah-badge .badge-text {
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(212, 175, 55, 0.85);
+            line-height: 1.6;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Counter Section */
+        .counter-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .counter-display {
+            position: relative;
+        }
+
+        .counter-value {
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #d4af37, #f5e6a3, #d4af37);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: goldShift 4s ease-in-out infinite;
+            line-height: 1;
+            transition: transform 0.15s ease;
+        }
+
+        .counter-value.bump {
+            transform: scale(1.15);
+        }
+
+        @keyframes goldShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .counter-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.3rem;
+        }
+
+        /* Tasbih Button */
+        .tasbih-btn {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            background: linear-gradient(145deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+            overflow: hidden;
+        }
+
+        .tasbih-btn::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent, rgba(212, 175, 55, 0.3), transparent, rgba(212, 175, 55, 0.3), transparent);
+            animation: rotate 4s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .tasbih-btn:hover {
+            transform: scale(1.08);
+            border-color: rgba(212, 175, 55, 0.7);
+            box-shadow: 
+                0 0 30px rgba(212, 175, 55, 0.2),
+                inset 0 0 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .tasbih-btn:active {
+            transform: scale(0.95);
+        }
+
+        .tasbih-btn .btn-text {
+            font-family: 'Amiri', serif;
+            font-size: 1.4rem;
+            color: #d4af37;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.3);
+            transform: scale(0);
+            animation: rippleAnim 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes rippleAnim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Float animation for particles */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 1rem;
+            color: rgba(212, 175, 55, 0.6);
+            z-index: 10;
+            animation: floatUp 1.5s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+
+        /* Reset Button */
+        .reset-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.35);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.8rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .reset-btn:hover {
+            border-color: rgba(255, 100, 100, 0.4);
+            color: rgba(255, 100, 100, 0.7);
+            background: rgba(255, 100, 100, 0.05);
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 1rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .doaa-text {
+                font-size: 1.5rem;
+                line-height: 2;
+            }
+
+            .counter-value {
+                font-size: 4rem;
+            }
+
+            .tasbih-btn {
+                width: 100px;
+                height: 100px;
+            }
+
+            .doaa-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="geometric-bg"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>✦ عداد الأذكار ✦</h1>
+            <div class="subtitle">سبّح واذكر الله</div>
+        </div>
+
+        <div class="doaa-card">
+            <p class="doaa-text">
+                لا إلٰهَ إلّا اللهُ وَحدَهُ لا شَريكَ لَهُ، لَهُ المُلكُ وَلَهُ الحَمدُ وَهُوَ عَلىٰ كُلِّ شَيءٍ قَديرٌ
+            </p>
+            <div class="ornament">
+                <span class="line"></span>
+                <span>❋</span>
+                <span class="line"></span>
+            </div>
+            <div class="arafah-badge">
+                <span class="badge-icon">🕋</span>
+                <span class="badge-text">إنه الدعاء المفضّل في يوم عرفة — أفضل دعاء</span>
+            </div>
+        </div>
+
+        <div class="counter-section">
+            <div class="counter-display">
+                <div class="counter-value" id="counter">0</div>
+                <div class="counter-label">عدد مرات التسبيح</div>
+            </div>
+
+            <button class="tasbih-btn" id="tasbihBtn" aria-label="اضغط للتسبيح">
+                <span class="btn-text">سبّح</span>
+            </button>
+        </div>
+
+        <button class="reset-btn" id="resetBtn">إعادة تعيين العداد</button>
+    </div>
+
+    <div class="footer">
+        اللهم تقبل منا ❤
+    </div>
+
+    <script>
+        const counterEl = document.getElementById('counter');
+        const tasbihBtn = document.getElementById('tasbihBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        const STORAGE_KEY = 'tasbih_count';
+
+        // Load count from localStorage
+        let count = parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
+        counterEl.textContent = count;
+
+        // Increment counter
+        function increment() {
+            count++;
+            counterEl.textContent = count;
+            localStorage.setItem(STORAGE_KEY, count);
+
+            // Bump animation
+            counterEl.classList.add('bump');
+            setTimeout(() => counterEl.classList.remove('bump'), 150);
+
+            // Spawn floating particle
+            spawnParticle();
+        }
+
+        // Create ripple effect on button
+        function createRipple(e) {
+            const btn = e.currentTarget;
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            const rect = btn.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+            btn.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        // Floating particle
+        function spawnParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const symbols = ['سبحان الله', '✦', '☆', '❋', '✧'];
+            particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            const btnRect = tasbihBtn.getBoundingClientRect();
+            particle.style.left = (btnRect.left + btnRect.width / 2 + (Math.random() - 0.5) * 60) + 'px';
+            particle.style.top = (btnRect.top - 10) + 'px';
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 1500);
+        }
+
+        // Event listeners
+        tasbihBtn.addEventListener('click', (e) => {
+            createRipple(e);
+            increment();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            if (confirm('هل تريد إعادة تعيين العداد؟')) {
+                count = 0;
+                counterEl.textContent = count;
+                localStorage.setItem(STORAGE_KEY, count);
+            }
+        });
+
+        // Keyboard support (spacebar)
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && e.target === document.body) {
+                e.preventDefault();
+                tasbihBtn.click();
+            }
+        });
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then((reg) => console.log('SW registered:', reg.scope))
+                    .catch((err) => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>
