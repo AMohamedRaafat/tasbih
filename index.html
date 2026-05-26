@@ -566,24 +566,22 @@
             }
         });
 
-        // Text to Speech for the dua
+        // Audio playback for the dua
         const doaaTextEl = document.getElementById('doaaText');
+        const doaaAudio = new Audio('doaa.wav');
         
-        function speakDoaa() {
-            // Check if it's already speaking
-            if (window.speechSynthesis.speaking) return;
+        function playDoaaAudio() {
+            // Check if it's already playing
+            if (!doaaAudio.paused) return;
             
-            const textToRead = doaaTextEl.textContent.trim();
-            const utterance = new SpeechSynthesisUtterance(textToRead);
-            utterance.lang = 'ar-SA'; // Arabic (Saudi Arabia)
-            utterance.rate = 0.8; // Slightly slower for better recitation feel
-            
-            window.speechSynthesis.speak(utterance);
+            // Reset and play
+            doaaAudio.currentTime = 0;
+            doaaAudio.play().catch(err => console.log('Audio playback failed:', err));
         }
 
         // Play on hover and click
-        doaaTextEl.addEventListener('mouseenter', speakDoaa);
-        doaaTextEl.addEventListener('click', speakDoaa);
+        doaaTextEl.addEventListener('mouseenter', playDoaaAudio);
+        doaaTextEl.addEventListener('click', playDoaaAudio);
         
         // Stop reading if mouse leaves (optional, maybe better to let it finish, so commented out)
         // doaaTextEl.addEventListener('mouseleave', () => window.speechSynthesis.cancel());
