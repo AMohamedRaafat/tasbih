@@ -29,7 +29,7 @@
             font-family: 'Cairo', sans-serif;
             background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 30%, #24243e 60%, #0f0c29 100%);
             color: #fff;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -103,7 +103,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2rem;
+            gap: 1rem;
             padding: 2rem;
             max-width: 600px;
             width: 100%;
@@ -270,7 +270,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
+            gap: 0.8rem;
             animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
@@ -423,8 +423,9 @@
 
         /* Footer */
         .footer {
-            position: fixed;
-            bottom: 1rem;
+            position: relative;
+            margin-top: 1.5rem;
+            padding-bottom: 1rem;
             text-align: center;
             font-size: 0.7rem;
             color: rgba(255, 255, 255, 0.2);
