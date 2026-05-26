@@ -186,26 +186,30 @@
             position: relative;
             z-index: 1;
             margin-top: 1.5rem;
+        }
+
+        .listen-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding: 0.6rem 1.2rem;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50px;
+            color: #d4af37;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
-        .doaa-text:hover {
-            color: #f5e6a3;
-        }
-        
-        .doaa-text::after {
-            content: '🔊';
-            position: absolute;
-            font-size: 1rem;
-            opacity: 0;
-            margin-right: 10px;
-            transform: translateY(-5px);
-            transition: opacity 0.3s ease;
-        }
-
-        .doaa-text:hover::after {
-            opacity: 0.8;
+        .listen-btn:hover {
+            background: rgba(212, 175, 55, 0.25);
+            transform: scale(1.05);
         }
 
         /* Ornament dividers */
@@ -469,9 +473,10 @@
         </div>
 
         <div class="doaa-card">
-            <p class="doaa-text" id="doaaText" title="استمع للدعاء">
+            <p class="doaa-text" id="doaaText">
                 لا إلٰهَ إلّا اللهُ وَحدَهُ لا شَريكَ لَهُ، لَهُ المُلكُ وَلَهُ الحَمدُ وَهُوَ عَلىٰ كُلِّ شَيءٍ قَديرٌ
             </p>
+            <button class="listen-btn" id="listenBtn">🔊 استماع الدعاء</button>
             <div class="ornament">
                 <span class="line"></span>
                 <span>❋</span>
@@ -568,7 +573,7 @@
         });
 
         // Audio playback for the dua
-        const doaaTextEl = document.getElementById('doaaText');
+        const listenBtn = document.getElementById('listenBtn');
         const doaaAudio = new Audio('doaa.wav');
         
         function playDoaaAudio() {
@@ -580,9 +585,8 @@
             doaaAudio.play().catch(err => console.log('Audio playback failed:', err));
         }
 
-        // Play on hover and click
-        doaaTextEl.addEventListener('mouseenter', playDoaaAudio);
-        doaaTextEl.addEventListener('click', playDoaaAudio);
+        // Play only on button click
+        listenBtn.addEventListener('click', playDoaaAudio);
         
         // Stop reading if mouse leaves (optional, maybe better to let it finish, so commented out)
         // doaaTextEl.addEventListener('mouseleave', () => window.speechSynthesis.cancel());
